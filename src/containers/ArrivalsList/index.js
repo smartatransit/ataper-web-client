@@ -1,5 +1,4 @@
 import React, { Fragment } from "react";
-import { prettyTime } from '../../utils/utils';
 import Fetcher from "../../components/Fetcher";
 import api from '../../api';
 import ArrivalListItem from '../../components/ArrivalListItem'
@@ -17,14 +16,14 @@ const ArrivalList = (props) => {
         return (
             <Fragment>
                 {data.map((arrival) => {
-                    console.log(arrival);
+                    console.log(arrival.schedule.destination);
                     return (
                         <ArrivalListItem
                             key={arrival.schedule["train-id"]}
                             line={arrival.station.line}
                             direction={arrival.direction}
                             ETA={arrival.schedule["waiting-time"]}
-                            waitSeconds={prettyTime(arrival.schedule["wait-seconds"])}
+                            waitSeconds={arrival.schedule["wait-seconds"]}
                             destionation={arrival.schedule.destination}
                         />
                     );

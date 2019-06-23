@@ -1,47 +1,55 @@
 import React, { useState } from 'react';
 import styled from "styled-components";
+import { colorCodeArrivalTime } from "../../utils/utils";
+import {
+    brand_blue,
+    brand_red,
+    brand_gold,
+    brand_green,
+    brand_darkest_grey,
+    brand_lighter_grey
+} from "../../utils/colors";
 
 const Arrival = styled.div`
     display: flex;
     flex-flow: row wrap;
     justify-content: space-between;
-    padding: 20px;
-    border-bottom: 1px solid var(--brand-lighter-grey);
+    align-items: center;
+    border-bottom: 1px solid ${brand_lighter_grey};
     cursor: pointer;
+    padding: 0 20px;
     position: relative;
     
 `;
 
-const ArrivalTime = styled.div`
-    width: 54px;
-    height: 54px;
-    border: 1px solid var(--brand-light-grey);
+const Line = styled.div`
+    width: 30%;
     border-radius: 5px;
     background-color: #FFFFFF;
-    box-shadow: 0 2px 1px 0 rgba(0,0,0,0.08);
     display: flex;
     align-items: center;
     justify-content: center;
     flex-flow: column nowrap;
     font-size: 24px;
-    
-`;
-
-const ETAMinLabel = styled.div`
-    font-size: 12px;
-    font-weight: 600;
+    color: ${brand_darkest_grey};
 `;
 
 const ArrivalHead = styled.div`
     display: flex;
     flex-flow: row wrap;
-    width: calc(100% - 74px);
+    text-align: end;
+    justify-self: flex-end;
+    padding: 30px 0;
+    border-left: 1px solid ${brand_lighter_grey};
+    flex: 1 1;
 `;
 
-const Line = styled.h2`
+const ArrivalTime = styled.h2`
     font-size: 18px;
     width: 100%;
     margin-bottom: 7px;
+    color: ${({color}) => (color)};
+    
 `;
 
 const Direction = styled.div`
@@ -53,6 +61,7 @@ const Details = styled.div`
     font-size: 12px;
     transition: max-height 0.25s ease;
     max-height: ${({isSelected}) => isSelected ? '2000px' : '0'};
+    overflow: hidden;
     
 `;
 
@@ -71,7 +80,6 @@ const ArrivalListItem = (props) => {
         destination
     } = props;
 
-    console.log('arrival list item');
 
     const [isSelected, setIsSelected] = useState(false);
 
@@ -82,12 +90,11 @@ const ArrivalListItem = (props) => {
 
     return (
         <Arrival onClick={handleClick}>
-            <ArrivalTime>
-                <div>{ETA}</div>
-                <ETAMinLabel>min</ETAMinLabel>
-            </ArrivalTime>
+            <Line line={line}>
+                <div>{line}</div>
+            </Line>
             <ArrivalHead>
-                <Line>{line}</Line>
+                <ArrivalTime color={colorCodeArrivalTime(ETA)}>{ETA}</ArrivalTime>
                 <Direction>{direction}</Direction>
             </ArrivalHead>
             <Details isSelected={isSelected}>
