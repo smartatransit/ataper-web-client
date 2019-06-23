@@ -3,6 +3,8 @@ import Stations from './constants/stations';
 import Directions from './constants/directionKey'
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
+import {capitalizeFirstLetter} from "./utils/utils";
+import { BASE_URL } from './env';
 
 const fetchScheduleByStationAndDay = (station, day) => async () => {
     
@@ -17,7 +19,7 @@ const fetchScheduleByStationAndDay = (station, day) => async () => {
 
 const fetchArrivalsByLineAndStation = (line, station) => async () => {
     console.log(line, station, 'second')
-    const response = await fetch(`http://smarta-api.herokuapp.com/api/live/schedule/line?line=${line}`, {mode: 'cors'});
+    const response = await fetch(`${BASE_URL}/api/live/schedule/line?line=${line}`, {mode: 'cors'});
     let jsonData = response.json();
     const ArrivalPromise = new Promise((resolve, reject) => {
         if (!response.ok) {
