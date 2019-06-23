@@ -22,6 +22,7 @@ const Arrival = styled.div`
 `;
 
 const Line = styled.div`
+    position: relative;
     width: 30%;
     display: flex;
     align-items: center;
@@ -29,20 +30,28 @@ const Line = styled.div`
     flex-flow: column nowrap;
     font-size: 24px;
     color: ${brand_darkest_grey};
-    border-right: 15px solid;
-    border-radius: 15px;
-    border-color: ${({line}) => {
-        switch(line) {
-            case 'Blue':
-                return brand_blue;
-            case 'Red':
-                return brand_red;
-            case 'Gold':
-                return brand_gold;
-            case 'Green':
-                return brand_green;
-        }    
-    }};
+    
+    &:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: -12px;
+        height: 24px;
+        width: 24px;
+        border-radius: 50%;
+        background-color: ${({line}) => {
+            switch(line) {
+                case 'Blue':
+                    return brand_blue;
+                case 'Red':
+                    return brand_red;
+                case 'Gold':
+                    return brand_gold;
+                case 'Green':
+                    return brand_green;
+            }
+        }};
+    }
 `;
 
 const ArrivalHead = styled.div`

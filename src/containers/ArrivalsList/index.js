@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import styled from 'styled-components';
 import Fetcher from "../../components/Fetcher";
 import api from '../../api';
@@ -24,6 +24,25 @@ const Direction = styled.span`
     text-transform: uppercase;
     
 `
+const renderArrivalList = (data) => {
+    return (
+        <Fragment>
+            {data.map((arrival) => {
+                return (
+                    <ArrivalListItem
+                        key={arrival.schedule["train-id"]}
+                        line={arrival.station.line}
+                        direction={arrival.direction}
+                        ETA={arrival.schedule["waiting-time"]}
+                        waitSeconds={arrival.schedule["waiting-seconds"]}
+                        destination={arrival.schedule.destination}
+                        nextStation={arrival.schedule.next}
+                    />
+                );
+            })}
+        </Fragment>
+    );
+};
 
 const ArrivalList = (props) => {
 
@@ -33,25 +52,16 @@ const ArrivalList = (props) => {
     } = props;
 
     const {direction} = match.params;
-    function renderArrivalList(data) {
-        return (
-            <Fragment>
-                {data.map((arrival) => {
-                    return (
-                        <ArrivalListItem
-                            key={arrival.schedule["train-id"]}
-                            line={arrival.station.line}
-                            direction={arrival.direction}
-                            ETA={arrival.schedule["waiting-time"]}
-                            waitSeconds={arrival.schedule["waiting-seconds"]}
-                            destination={arrival.schedule.destination}
-                            nextStation={arrival.schedule.next}
-                        />
-                    );
-                })}
-            </Fragment>
-        );
-    }
+    const [time, setTime] = useState(0);
+    let interval = setInterval(() => setTime(time+1), 60000);
+
+    useEffect(() => {
+        interval = setInterval(() => setTime(time+1), 60000);
+        return clearInterval(interval);
+    }, [time]);
+
+
+
 
     return (
         <Fragment>
