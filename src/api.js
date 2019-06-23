@@ -114,7 +114,6 @@ const fetchArrivalsByStationAndDirection = (station, direction) => async () => {
         extractedData = [...extractedData, ...arrivals];
     }
 
-    console.log(extractedData);
     return extractedData;
 
 
