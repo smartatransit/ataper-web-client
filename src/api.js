@@ -106,9 +106,16 @@ const fetchArrivalsByStationAndDirection = (station, direction) => async () => {
         if (!responses[i].ok) {
             throw new Error(responses[i].body, responses[i].statusCode);
         }
-        let response = await responses[i].json();
-        const arrivals = response.filter((arrival) => {
+        const response = await responses[i].json();
+
+        let arrivals = response.filter((arrival) => {
             return arrival.station.name === Stations[station].name && arrival.station.direction === Directions[direction];
+        });
+
+        arrivals.forEach((train) => {
+            train.schedule.next = response.filter((arrival) => {
+                return arrival.schedule['train-id'] === train.schedule['train-id'];
+            })[0].schedule['next-station'];
         });
         extractedData = [...extractedData, ...arrivals];
     }

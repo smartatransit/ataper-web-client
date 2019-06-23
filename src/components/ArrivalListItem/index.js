@@ -73,6 +73,7 @@ const ArrivalListItem = (props) => {
         direction,
         ETA,
         waitSeconds,
+        nextStation,
         destination
     } = props;
 
@@ -95,6 +96,7 @@ const ArrivalListItem = (props) => {
             </ArrivalHead>
             <Details isSelected={isSelected}>
                 <DetailItem>Wait Seconds: <b>{prettyTime(waitSeconds)}</b></DetailItem>
+                <DetailItem>Next Station: <b>{nextStation}</b></DetailItem>
                 <DetailItem>Destination: <b>{destination}</b></DetailItem>
             </Details>
         </Arrival>

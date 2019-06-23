@@ -45,6 +45,7 @@ const ArrivalList = (props) => {
                             ETA={arrival.schedule["waiting-time"]}
                             waitSeconds={arrival.schedule["waiting-seconds"]}
                             destination={arrival.schedule.destination}
+                            nextStation={arrival.schedule.next}
                         />
                     );
                 })}
