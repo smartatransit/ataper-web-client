@@ -19,7 +19,7 @@ const ErrorLabel = styled.div`
   text-align: center;
 `;
 
-const ReloadButton = styled.button`
+const ReloadButton = styled.div`
   width: 100%;
   margin: 40px 0;
   display: flex;

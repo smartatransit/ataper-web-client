@@ -195,14 +195,6 @@ export default {
     FivePoints: {
         name: "Five Points Station",
         directions: {
-            east: [
-                "blue",
-                "green"
-            ],
-            west: [
-                "blue",
-                "green"
-            ],
             north: [
                 "red",
                 "gold"
@@ -210,6 +202,14 @@ export default {
             south: [
                 "red",
                 "gold"
+            ],
+            east: [
+                "blue",
+                "green"
+            ],
+            west: [
+                "blue",
+                "green"
             ]
         }
     },
@@ -317,7 +317,7 @@ export default {
         }
     },
     LindberghCenter: {
-        name: "Lindbergh Center Station",
+        name: "Lindbergh Station",
         directions: {
             north: [
                 "red",

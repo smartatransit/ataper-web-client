@@ -12,7 +12,7 @@ const Arrival = styled.div`
     
 `;
 
-const ETA = styled.div`
+const ArrivalTime = styled.div`
     width: 54px;
     height: 54px;
     border: 1px solid var(--brand-light-grey);
@@ -67,10 +67,11 @@ const ArrivalListItem = (props) => {
         line,
         direction,
         ETA,
-        scheduled,
-        actual,
-        timeToDestination
+        waitSeconds,
+        destination
     } = props;
+
+    console.log('arrival list item');
 
     const [isSelected, setIsSelected] = useState(false);
 
@@ -81,18 +82,17 @@ const ArrivalListItem = (props) => {
 
     return (
         <Arrival onClick={handleClick}>
-            <ETA>
+            <ArrivalTime>
                 <div>{ETA}</div>
                 <ETAMinLabel>min</ETAMinLabel>
-            </ETA>
+            </ArrivalTime>
             <ArrivalHead>
                 <Line>{line}</Line>
                 <Direction>{direction}</Direction>
             </ArrivalHead>
             <Details isSelected={isSelected}>
-                <DetailItem>Scheduled: {scheduled}</DetailItem>
-                <DetailItem>Actual: {actual}</DetailItem>
-                <DetailItem>ETA to destination: {timeToDestination}</DetailItem>
+                <DetailItem>Wait Seconds: {waitSeconds}</DetailItem>
+                <DetailItem>Destination: {destination}</DetailItem>
             </Details>
         </Arrival>
     );

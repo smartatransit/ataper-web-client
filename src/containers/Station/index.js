@@ -22,7 +22,7 @@ const Station = (props) => {
         <Fragment>
             {shouldShowPicker && <DirectionSelector directions={directions} url={match.url}/>}
             <Route
-                exact path={`${match.url}/:direction`}
+                path={`${match.url}/:direction`}
                 render={(props) => {
                     setShouldShowPicker(false);
                     return <ArrivalList  {...props} station={stationKey} />

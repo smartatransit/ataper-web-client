@@ -1,6 +1,6 @@
 export default {
-    northbound: "N",
-    southbound: "S",
-    eastbound: "E",
-    westbound: "W"
+    north: "N",
+    south: "S",
+    east: "E",
+    west: "W"
 };

@@ -1,5 +1,5 @@
-import React, { Fragment, useEffect } from "react";
-import styled from 'styled-components';
+import React, { Fragment } from "react";
+import { prettyTime } from '../../utils/utils';
 import Fetcher from "../../components/Fetcher";
 import api from '../../api';
 import ArrivalListItem from '../../components/ArrivalListItem'
@@ -17,8 +17,16 @@ const ArrivalList = (props) => {
         return (
             <Fragment>
                 {data.map((arrival) => {
+                    console.log(arrival);
                     return (
-                        <div>{console.log('arrival', arrival)}</div>
+                        <ArrivalListItem
+                            key={arrival.schedule["train-id"]}
+                            line={arrival.station.line}
+                            direction={arrival.direction}
+                            ETA={arrival.schedule["waiting-time"]}
+                            waitSeconds={prettyTime(arrival.schedule["wait-seconds"])}
+                            destionation={arrival.schedule.destination}
+                        />
                     );
                 })}
             </Fragment>

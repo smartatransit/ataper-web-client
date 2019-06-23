@@ -1,7 +1,6 @@
 import {getScheduleType} from "./utils";
 import Stations from './constants/stations';
 import Directions from './constants/directionKey'
-import {capitalizeFirstLetter, flatten} from "./utils/utils";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
@@ -91,36 +90,32 @@ const fetchStationsByLocation = () => async () => {
 const fetchArrivalsByStationAndDirection = (station, direction) => async () => {
     const lines = Stations[station].directions[direction];
     let responsePromises = [];
+
+
     for(const line of lines) {
-        const newArrivals = fetch(`http://smarta-api.herokuapp.com/api/live/schedule/line/${capitalizeFirstLetter(line)}`, {mode: 'cors'});
-        responsePromises.push(newArrivals)
-    }
-    const responses = await Promise.all(responsePromises);
-    let extractedData = [];
-
-    let jsonData = responses.map((response) => {
-
+        const response = fetch(`http://smarta-api.herokuapp.com/api/live/schedule/line/${capitalizeFirstLetter(line)}`, {mode: 'cors'});
         if (!response.ok) {
             throw new Error(response.body, response.statusCode);
         }
+        responsePromises.push(response)
+    }
 
-        const respJson = response.json();
+    const responses = await Promise.all(responsePromises);
+    let extractedData = [];
 
-        respJson.then((arrivalList) => {
-            extractedData.push(arrivalList.filter((arrival) => {
-                return true;
-            }));
+    for (let i=0; i<responses.length;i++) {
+        let response = responses[i].json();
+        let arrivals = response.filter((arrival) => {
+            return arrival.station.name === Stations[station].name && arrival.stations.direction === directionKey[direction];
         });
-
-        return respJson;
-    });
+        extractedData = [...extractedData, ...arrivals];
 
 
-    let flattenedData = flatten(extractedData);
-    console.log('flat',flattenedData);
-    console.log('2d', extractedData);
+    }
 
-    return flattenedData;
+    console.log(extractedData);
+
+    return extractedData;
 };
 
 export default {
