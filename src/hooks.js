@@ -11,7 +11,7 @@ export function useFetcher(action) {
             const actionData = await action();
             setData(actionData);
         } catch (e) {
-            //console.log(e)
+            console.error(e);
             setError(e);
         } finally {
             setLoading(false);

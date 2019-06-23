@@ -1,8 +1,6 @@
 import {getScheduleType} from "./utils";
 import Stations from './constants/stations';
 import Directions from './constants/directionKey'
-
-const BASE_URL = process.env.REACT_APP_BASE_URL;
 import {capitalizeFirstLetter} from "./utils/utils";
 import { BASE_URL } from './env';
 
@@ -82,6 +80,7 @@ const fetchStationsByLocation = () => async () => {
     const position = await location;
     const response = await fetch(`${BASE_URL}/api/static/stations/location?latitude=${position.latitude}&longitude=${position.longitude}`, {mode: 'cors'});
     const jsonData = response.json();
+    console.log(jsonData);
 
     if (!response.ok) {
         throw new Error(jsonData, response.statusCode);
@@ -95,29 +94,32 @@ const fetchArrivalsByStationAndDirection = (station, direction) => async () => {
 
 
     for(const line of lines) {
-        const response = fetch(`http://smarta-api.herokuapp.com/api/live/schedule/line/${capitalizeFirstLetter(line)}`, {mode: 'cors'});
-        if (!response.ok) {
-            throw new Error(response.body, response.statusCode);
-        }
+        const response = fetch(`${BASE_URL}/api/live/schedule/line/${capitalizeFirstLetter(line)}`, {mode: 'cors'});
         responsePromises.push(response)
     }
 
     const responses = await Promise.all(responsePromises);
     let extractedData = [];
 
+
     for (let i=0; i<responses.length;i++) {
-        let response = responses[i].json();
-        let arrivals = response.filter((arrival) => {
-            return arrival.station.name === Stations[station].name && arrival.stations.direction === Directions[direction];
+
+        if (!responses[i].ok) {
+            throw new Error(responses[i].body, responses[i].statusCode);
+        }
+        let response = await responses[i].json();
+        const arrivals = response.filter((arrival) => {
+            return arrival.station.name === Stations[station].name && arrival.station.direction === Directions[direction];
         });
         extractedData = [...extractedData, ...arrivals];
-
-
     }
 
     console.log(extractedData);
-
     return extractedData;
+
+
+
+
 };
 
 export default {
