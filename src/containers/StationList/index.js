@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import styled from 'styled-components';
 import Fetcher from "../../components/Fetcher";
 import {brand_lighter_grey} from "../../utils/colors";
@@ -15,31 +15,31 @@ const ListItem = styled.div`
   width: 100%;
   border-bottom: 1px solid ${brand_lighter_grey};
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
+  flex-flow: row nowrap;
   position: relative;
-  height: calc(12.5vh - 8.75px);
+  height: calc(20vh - 14px);
   cursor: pointer;
 `;
 
 const ListItemName = styled.div`
-    font-size: 4vh;
+    font-size: 3vh;
     display: flex;
     align-items: center;
-    justify-content: center;
+    flex: 1 1;
 `;
 
 const DistanceContainer = styled.div`
-    position: absolute;
     display: flex;
     flex-direction: column;
-    font-size: 2.5vh;
+    justify-content: center;
+    align-items: center;
+    font-size: 2vh;
     right: 0;
+    min-width: 70px;
 `;
 
 const DistanceIcon = styled.img`
-    height: 5vh;
+    height: 3vh;
 `;
 
 const StationList = (props) => {

@@ -16,15 +16,14 @@ const ArrivalList = (props) => {
         return (
             <Fragment>
                 {data.map((arrival) => {
-                    console.log(arrival.schedule.destination);
                     return (
                         <ArrivalListItem
                             key={arrival.schedule["train-id"]}
                             line={arrival.station.line}
                             direction={arrival.direction}
                             ETA={arrival.schedule["waiting-time"]}
-                            waitSeconds={arrival.schedule["wait-seconds"]}
-                            destionation={arrival.schedule.destination}
+                            waitSeconds={arrival.schedule["waiting-seconds"]}
+                            destination={arrival.schedule.destination}
                         />
                     );
                 })}

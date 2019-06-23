@@ -1,11 +1,7 @@
 import React, { useState } from 'react';
 import styled from "styled-components";
-import { colorCodeArrivalTime } from "../../utils/utils";
+import { colorCodeArrivalTime, prettyTime } from "../../utils/utils";
 import {
-    brand_blue,
-    brand_red,
-    brand_gold,
-    brand_green,
     brand_darkest_grey,
     brand_lighter_grey
 } from "../../utils/colors";
@@ -58,7 +54,7 @@ const Direction = styled.div`
 
 const Details = styled.div`
     width: 100%;
-    font-size: 12px;
+    font-size: 14px;
     transition: max-height 0.25s ease;
     max-height: ${({isSelected}) => isSelected ? '2000px' : '0'};
     overflow: hidden;
@@ -98,8 +94,8 @@ const ArrivalListItem = (props) => {
                 <Direction>{direction}</Direction>
             </ArrivalHead>
             <Details isSelected={isSelected}>
-                <DetailItem>Wait Seconds: {waitSeconds}</DetailItem>
-                <DetailItem>Destination: {destination}</DetailItem>
+                <DetailItem>Wait Seconds: <b>{prettyTime(waitSeconds)}</b></DetailItem>
+                <DetailItem>Destination: <b>{destination}</b></DetailItem>
             </Details>
         </Arrival>
     );
