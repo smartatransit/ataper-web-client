@@ -13,7 +13,7 @@ const Arrival = styled.div`
     align-items: center;
     border-bottom: 1px solid ${brand_lighter_grey};
     cursor: pointer;
-    padding: 0 20px;
+    padding: 0 20px 0 0;
     position: relative;
     
 `;

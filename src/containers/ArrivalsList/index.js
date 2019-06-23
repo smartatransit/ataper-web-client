@@ -1,8 +1,18 @@
 import React, { Fragment } from "react";
+import styled from 'styled-components';
 import Fetcher from "../../components/Fetcher";
 import api from '../../api';
 import ArrivalListItem from '../../components/ArrivalListItem'
-
+import {brand_darkest_grey, brand_lighter_grey} from "../../utils/colors";
+import Stations from "../../constants/stations";
+const StationHead = styled.div`
+    width: 100%;
+    text-align: center;
+    font-size: 7vh;
+    padding: 20px;
+    border-bottom: 1px solid ${brand_lighter_grey};
+    color: ${brand_darkest_grey};
+`
 
 const ArrivalList = (props) => {
 
@@ -32,11 +42,15 @@ const ArrivalList = (props) => {
     }
 
     return (
-        <Fetcher action={api.fetchArrivalsByStationAndDirection(station, direction)}>
+        <Fragment>
+            <StationHead>{Stations[station].name.replace('Station', '').trim()}</StationHead>
+            <Fetcher action={api.fetchArrivalsByStationAndDirection(station, direction)}>
 
-            {data => renderArrivalList(data)}
+                {data => renderArrivalList(data)}
 
-        </Fetcher>
+            </Fetcher>
+        </Fragment>
+
     );
 };
 
