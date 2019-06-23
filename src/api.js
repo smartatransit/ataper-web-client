@@ -108,7 +108,7 @@ const fetchArrivalsByStationAndDirection = (station, direction) => async () => {
     for (let i=0; i<responses.length;i++) {
         let response = responses[i].json();
         let arrivals = response.filter((arrival) => {
-            return arrival.station.name === Stations[station].name && arrival.stations.direction === directionKey[direction];
+            return arrival.station.name === Stations[station].name && arrival.stations.direction === Directions[direction];
         });
         extractedData = [...extractedData, ...arrivals];
 
