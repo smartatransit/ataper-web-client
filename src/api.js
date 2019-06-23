@@ -80,7 +80,6 @@ const fetchStationsByLocation = () => async () => {
     const position = await location;
     const response = await fetch(`${BASE_URL}/api/static/stations/location?latitude=${position.latitude}&longitude=${position.longitude}`, {mode: 'cors'});
     const jsonData = response.json();
-    console.log(jsonData);
 
     if (!response.ok) {
         throw new Error(jsonData, response.statusCode);
