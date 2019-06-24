@@ -28,16 +28,16 @@ const Line = styled.div`
     width: 30%;
     display: flex;
     align-items: center;
-    justify-content: center;
-    flex-flow: column nowrap;
+    flex-flow: row nowrap;
     font-size: 24px;
+    padding-left: 15px;
     color: ${brand_darkest_grey};
     
     &:after {
         content: '';
         position: absolute;
         top: 0;
-        right: -12px;
+        right: 12px;
         height: 24px;
         width: 24px;
         border-radius: 50%;
