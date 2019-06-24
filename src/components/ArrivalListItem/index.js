@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import styled from "styled-components";
 import { colorCodeArrivalTime, prettyTime } from "../../utils/utils";
+import {IconContext} from "react-icons";
+import {IoIosInformationCircleOutline} from "react-icons/io";
+import Modal from '../Modal';
 import {
     brand_blue,
     brand_darkest_grey, brand_gold, brand_green,
@@ -49,9 +52,15 @@ const Line = styled.div`
                     return brand_gold;
                 case 'Green':
                     return brand_green;
+                default:
+                    return 'transparent';
             }
         }};
     }
+`;
+
+const WaitSecondsInfo = styled.div`
+ font-size: 24px;
 `;
 
 const ArrivalHead = styled.div`
@@ -91,9 +100,18 @@ const Details = styled.div`
 `;
 
 const DetailItem = styled.div`
+    position: relative;
     width: 100%;
     padding: 10px 15px;
     
+`;
+
+const InfoButton = styled.div`
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    right: 20px;
+    top: 10px;
 `;
 
 const ArrivalListItem = (props) => {
@@ -103,19 +121,21 @@ const ArrivalListItem = (props) => {
         ETA,
         waitSeconds,
         nextStation,
+        isDefaultSelected,
+        onInfoClick,
         destination
     } = props;
 
 
-    const [isSelected, setIsSelected] = useState(false);
+    const [isSelected, setIsSelected] = useState(isDefaultSelected);
 
-    const handleClick = (e) => {
+    const handleArrivalClick = (e) => {
         e.preventDefault();
         setIsSelected(! isSelected);
     };
 
     return (
-        <Arrival isSelected={isSelected} onClick={handleClick}>
+        <Arrival isSelected={isSelected} onClick={handleArrivalClick}>
             <Line line={line}>
                 <div>{line}</div>
             </Line>
@@ -124,8 +144,15 @@ const ArrivalListItem = (props) => {
                 <Direction>{direction}</Direction>
             </ArrivalHead>
             <Details isSelected={isSelected}>
-                <DetailItem>Wait Seconds: <b>{prettyTime(waitSeconds)}</b></DetailItem>
-                <DetailItem>Next Station: <b>{nextStation}</b></DetailItem>
+                <DetailItem>
+                    <span>Wait Seconds: <b>{prettyTime(waitSeconds)}</b></span>
+                    <InfoButton onClick={onInfoClick}>
+                        <IconContext.Provider value={{color: brand_blue, size:'30px'}}>
+                            <IoIosInformationCircleOutline/>
+                        </IconContext.Provider>
+                    </InfoButton>
+                </DetailItem>
+                <DetailItem>Current Location: <b>{nextStation}</b></DetailItem>
                 <DetailItem>Destination: <b>{destination}</b></DetailItem>
             </Details>
         </Arrival>

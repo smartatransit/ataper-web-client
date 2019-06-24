@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, Fragment } from 'react';
 import { Route } from "react-router-dom";
 
 import Stations from '../../constants/stations';
@@ -9,8 +9,7 @@ import DirectionSelector from '../../components/DirectionSelector'
 
 const Station = (props) => {
     const {
-        match,
-        history
+        match
     } = props;
     let {station} = match.params;
     const stationKey = station.replace(/Station/gi, '').trim().replace('-', '');
