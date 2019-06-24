@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { colorCodeArrivalTime, prettyTime } from "../../utils/utils";
 import {IconContext} from "react-icons";
 import {IoIosInformationCircleOutline} from "react-icons/io";
-import Modal from '../Modal';
 import {
     brand_blue,
     brand_darkest_grey, brand_gold, brand_green,
@@ -57,10 +56,6 @@ const Line = styled.div`
             }
         }};
     }
-`;
-
-const WaitSecondsInfo = styled.div`
- font-size: 24px;
 `;
 
 const ArrivalHead = styled.div`

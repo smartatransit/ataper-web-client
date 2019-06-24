@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import {Layer} from "grommet";
 import {IconContext} from "react-icons";
 import {IoIosClose} from "react-icons/io";
 

@@ -65,13 +65,12 @@ const ArrivalList = (props) => {
 
     const {direction} = match.params;
     const [time, setTime] = useState(0);
-    const interval = setInterval(() => setTime(time+1), 60000);
     const [infoSelected, setInfoSelected] = useState(false);
 
     useEffect(() => {
-        setInterval(() => setTime(time+1), 60000);
-        return clearInterval(interval);
-    }, [interval, time]);
+        const interval = setInterval(() => setTime(Date.now()), 60000);
+        return () => clearInterval(interval);
+    }, [time]);
 
     const closeModal = (e) => {
         e.preventDefault();
@@ -93,7 +92,7 @@ const ArrivalList = (props) => {
             {infoSelected && (
                 <Modal
                     close={closeModal}
-                    message="Honestly, we have no idea what this metric is. The Marta API returns this value in addition to a pretty-printed time of arrival. The values often vary by more than a minute, and we are not sure which one is the more accurate measure of when a train will show. We chose to include it to give riders another metric to use in case times are off in the station or in other transit apps."
+                    message="Honestly, we have no idea what the 'Wait Seconds' metric is. The Marta API returns this value in addition to a pretty-printed time of arrival. These values often vary by more than a minute, and we are not sure which one is the more accurate measure of when a train will show. We chose to include 'Wait Seconds' to give riders another metric to use in case arrival times on station monitors or in other transit apps are inaccurate."
                 />
             )}
         </Fragment>
