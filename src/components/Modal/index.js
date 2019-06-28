@@ -4,7 +4,7 @@ import {IconContext} from "react-icons";
 import {IoIosClose} from "react-icons/io";
 
 const Container = styled.div`
-    position: absolute;
+    position: fixed;
     width: 100%;
     top: 0;
     left: 0;
