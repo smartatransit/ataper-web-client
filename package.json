@@ -19,7 +19,7 @@
   "scripts": {
     "start": "REACT_APP_ENV=local PORT=3006 react-scripts start",
     "start:staging": "REACT_APP_ENV=staging PORT=3006 react-scripts start",
-    "start:prod": "REACT_APP_ENV=prod PORT=env.PORT react-scripts start",
+    "start:prod": "REACT_APP_ENV=prod react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
