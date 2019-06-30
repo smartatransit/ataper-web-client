@@ -17,7 +17,7 @@
     "styled-components": "^4.2.0"
   },
   "scripts": {
-    "start": "REACT_APP_ENV=local PORT=3006 react-scripts start",
+    "start": "REACT_APP_ENV=prod react-scripts start",
     "start:staging": "REACT_APP_ENV=staging PORT=3006 react-scripts start",
     "start:prod": "REACT_APP_ENV=prod react-scripts start",
     "build": "react-scripts build",
