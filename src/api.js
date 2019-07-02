@@ -6,7 +6,7 @@ import { BASE_URL } from './env';
 
 const fetchScheduleByStationAndDay = (station, day) => async () => {
     
-    const response = await fetch(`${BASE_URL}/api/static/schedule/station?schedule=${day}&station=${station}`, {mode: 'cors'});
+    const response = await fetch(`${BASE_URL}/api/static/schedule/station?schedule=${day}&station-name=${station}`, {mode: 'cors'});
     const jsonData = response.json();
     if (!response.ok) {
         throw new Error(jsonData, response.statusCode);

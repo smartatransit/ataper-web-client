@@ -15,18 +15,9 @@ const Station = (props) => {
     const stationKey = station.replace(/Station/gi, '').trim().replace('-', '');
     const directions = Stations[stationKey].directions;
 
-    const [shouldShowPicker, setShouldShowPicker] = useState(true);
-
     return (
         <Fragment>
-            {shouldShowPicker && <DirectionSelector directions={directions} url={match.url}/>}
-            <Route
-                path={`${match.url}/:direction`}
-                render={(props) => {
-                    setShouldShowPicker(false);
-                    return <ArrivalList  {...props} station={stationKey} />
-                }}
-            />
+            <DirectionSelector directions={directions} url={match.url}/>
         </Fragment>
     );
 };

@@ -1,30 +1,12 @@
 import React, { Fragment, useState, useEffect } from "react";
-import styled from 'styled-components';
 import Fetcher from "../../components/Fetcher";
 import api from '../../api';
 import ArrivalListItem from '../../components/ArrivalListItem'
-import {brand_darkest_grey, brand_lighter_grey} from "../../utils/colors";
 import Stations from "../../constants/stations";
 import Modal from "../../components/Modal";
-const StationHead = styled.div`
-    width: 100%;
-    display: flex;
-    flex-flow: column nowrap;
-    align-items: center;
-    font-size: 7vh;
-    padding: 20px;
-    border-bottom: 1px solid ${brand_lighter_grey};
-    color: ${brand_darkest_grey};
-`;
+import StationHead from '../../components/StationHead';
 
-const Direction = styled.span`
-    font-size: 2vh;
-    margin-top: 20px;
-    color: ${brand_lighter_grey};
-    font-weight: bold;
-    text-transform: uppercase;
-    
-`;
+
 const renderArrivalList = (data, minTime, setInfoSelected) => {
     return (
         <Fragment>
@@ -60,10 +42,10 @@ const ArrivalList = (props) => {
 
     const {
         match,
-        station,
     } = props;
 
-    const {direction} = match.params;
+    const {direction, station} = match.params;
+    const stationKey = station.replace('-','');
     const [time, setTime] = useState(0);
     const [infoSelected, setInfoSelected] = useState(false);
 
@@ -80,11 +62,11 @@ const ArrivalList = (props) => {
 
     return (
         <Fragment>
-            <StationHead>
-                <span>{Stations[station].name.replace('Station', '').trim()}</span>
-                <Direction>{direction}</Direction>
-            </StationHead>
-            <Fetcher action={api.fetchArrivalsByStationAndDirection(station, direction)}>
+            <StationHead
+                station={Stations[stationKey].name.replace('Station', '').trim()}
+                direction={direction}
+            />
+            <Fetcher action={api.fetchArrivalsByStationAndDirection(stationKey, direction)}>
 
                 {data => renderArrivalList(data, getMin(data), setInfoSelected)}
 

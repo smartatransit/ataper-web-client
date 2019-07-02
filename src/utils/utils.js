@@ -28,3 +28,11 @@ export function colorCodeArrivalTime(time) {
     }
     return brand_darkest_grey;
 }
+
+export function getDay(date) {
+    var day = date.getDay();
+    if (day === 6 || day === 0) {
+        return 'weekend';
+    }
+    return 'weekday';
+}
