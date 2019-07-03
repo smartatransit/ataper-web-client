@@ -36,3 +36,9 @@ export function getDay(date) {
     }
     return 'weekday';
 }
+
+export function sortByTime(data) {
+    return data.sort(function(a,b){
+        return new Date(b) - new Date(a);
+    });
+}

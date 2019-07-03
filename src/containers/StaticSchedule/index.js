@@ -1,12 +1,13 @@
 import React, { Fragment, useState, useEffect } from "react";
 import styled from 'styled-components';
-import { Menu, Tabs } from 'grommet';
+import { Menu } from 'grommet';
 import Fetcher from "../../components/Fetcher";
 import api from '../../api';
 import Stations from "../../constants/stations";
 import StationHead from '../../components/StationHead';
-import {getDay} from "../../utils/utils";
+import {getDay, sortByTime} from "../../utils/utils";
 import {brand_lighter_grey} from "../../utils/colors";
+import Tabs from '../../components/Tabs';
 
 const List = styled.div`
   padding: 0 25px;
@@ -32,6 +33,22 @@ const renderDirectionMenu = (directions, setDirection, initialDirection) => {
         />
     )
 };
+const renderAllLines = (data, direction) => {
+    let allLines = [];
+    for(let line in data) {
+        if(data.hasOwnProperty(line) && line !== 'station-name')
+            allLines = allLines.concat(data[line][direction]);
+    }
+    allLines = sortByTime(allLines);
+    console.log(allLines);
+    return (
+        <List>
+            {allLines.map((time) => (
+                <ListItem key={time}>{time}</ListItem>
+            ))}
+        </List>
+    );
+}
 
 const renderStaticSchedule = (data) => {
     console.log(data);
@@ -42,8 +59,7 @@ const renderStaticSchedule = (data) => {
             ))}
         </List>
     )
-
-}
+};
 
 
 const StaticSchedule = (props) => {
@@ -59,12 +75,22 @@ const StaticSchedule = (props) => {
     const directions = Stations[stationKey].directions;
 
     const [directionState, setDirection] = useState(direction || Object.keys(directions)[0]);
-    const [lineState, setLine] = useState(line || directions[Object.keys(directions)[0]][0]);
+    const [lineState, setLine] = useState(line || 'All');
+    const [lines, setLines] = useState([]);
 
 
     const directionKey = `${directionState}bound`;
-    console.log(lineState);
-    console.log(directionState)
+    const renderTabs = () => {
+        const data = Stations[stationKey].directions[directionState];
+        const lines = data.map((line) => ({name: line, onClick: setLine}));
+        return (
+            <Tabs
+                items={lines}
+                selected={lineState}
+            />
+        )
+    };
+
 
     return (
         <Fragment>
@@ -75,9 +101,15 @@ const StaticSchedule = (props) => {
 
             <Fetcher action={api.fetchScheduleByStationAndDay(Stations[stationKey].name, getDay(new Date()))}>
 
-                {data => renderStaticSchedule(data[lineState][directionKey])}
-
+                {data => {
+                    if(lineState === 'All') {
+                        return renderAllLines(data, directionKey);
+                    }
+                    return renderStaticSchedule(data[lineState][directionKey]);
+                }}
             </Fetcher>
+            {renderTabs()}
+
         </Fragment>
 
     );
