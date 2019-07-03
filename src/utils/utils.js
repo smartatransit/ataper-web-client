@@ -39,6 +39,6 @@ export function getDay(date) {
 
 export function sortByTime(data) {
     return data.sort(function(a,b){
-        return new Date(b) - new Date(a);
+        return new Date('1970/01/01 ' + a.time) - new Date('1970/01/01 ' + b.time);
     });
 }
