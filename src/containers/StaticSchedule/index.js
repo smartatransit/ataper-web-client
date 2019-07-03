@@ -66,7 +66,6 @@ const renderAllLines = (data, direction) => {
         allLines = flatten(zip(data[line][direction].map((item) => ({line:line, time:item})), allLines)).filter(element => element);
     }
 
-    console.log(allLines);
     return (
         <List>
             {allLines.map((item, index) => (
@@ -77,7 +76,6 @@ const renderAllLines = (data, direction) => {
 }
 
 const renderStaticSchedule = (data, line) => {
-    console.log(data);
     return (
         <List>
             {data.map((time, index) => (
@@ -96,16 +94,12 @@ const StaticSchedule = (props) => {
     } = props;
 
     const {station, direction} = match.params;
-    const stationName = station.replace('-',' ');
     const stationKey = station.replace('-','');
     const directions = Stations[stationKey].directions;
-
     const [directionState, setDirection] = useState(direction || Object.keys(directions)[0]);
     const [lineState, setLine] = useState(line || 'All');
-    const [lines, setLines] = useState([]);
-
-
     const directionKey = `${directionState}bound`;
+
     const renderTabs = () => {
         const data = Stations[stationKey].directions[directionState];
         const lines = data.map((line) => ({name: line, onClick: setLine}));
@@ -116,7 +110,6 @@ const StaticSchedule = (props) => {
             />
         )
     };
-
 
     return (
         <Fragment>

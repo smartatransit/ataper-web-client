@@ -44,7 +44,17 @@ const Tabs = ({items, selected}) => {
 
     return (
         <TabsContainer>{items.map((item, index) => (
-            <Tab key={item.name} onClick={() => { setSelectedIndex(index); item.onClick(item.name);}} isSelected={index === selectedIndex}>{item.name}</Tab>
+            <Tab key={item.name}
+                 onClick={() => {
+                     if(index === selectedIndex) {
+                         setSelectedIndex(-1);
+                         item.onClick("All");
+                         return;
+                     }
+                     setSelectedIndex(index);
+                     item.onClick(item.name);
+                 }}
+                 isSelected={index === selectedIndex}>{item.name}</Tab>
         ))}</TabsContainer>
     );
 
