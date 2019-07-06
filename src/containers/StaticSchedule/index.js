@@ -11,7 +11,7 @@ import {brand_lighter_grey, brand_gold, brand_green, brand_red, brand_blue} from
 import Tabs from '../../components/Tabs';
 
 const List = styled.div`
-  padding: 0 25px;
+  padding: 0 25px 50px;
 `;
 
 const ListItem = styled.div`
@@ -47,15 +47,36 @@ const ListItem = styled.div`
     }
 `;
 
-const renderDirectionMenu = (directions, setDirection, initialDirection) => {
-    let items = [];
-    for (let direction in directions) {
-        items.push({ label: direction, onClick: () => setDirection(direction) });
+const MenuContainer = styled.div`
+    display: flex;
+    justify-content: center;
+    
+    > button {
+        margin-right: 20px;
+        
+        &:last-of-type {
+            margin-right: 0;
+        }
     }
+`;
+
+const renderMenu = (items, action, initialValue) => {
+    let menuItems = [];
+    if(Array.isArray(items)) {
+        menuItems = items.map((item) => {
+            return { label: item, onClick: () => action(item) };
+        });
+    } else {
+        for (let item in items) {
+            if(items.hasOwnProperty(item))
+                menuItems.push({ label: item, onClick: () => action(item) });
+        }
+    }
+
     return (
         <Menu
-            label={initialDirection || "Direction"}
-            items={items}
+            label={initialValue}
+            items={menuItems}
         />
     )
 };
@@ -90,7 +111,8 @@ const StaticSchedule = (props) => {
 
     const {
         match,
-        line
+        line,
+        day
     } = props;
 
     const {station, direction} = match.params;
@@ -98,6 +120,7 @@ const StaticSchedule = (props) => {
     const directions = Stations[stationKey].directions;
     const [directionState, setDirection] = useState(direction || Object.keys(directions)[0]);
     const [lineState, setLine] = useState(line || 'All');
+    const [schedule, setSchedule] = useState(day || 'weekday');
     const directionKey = `${directionState}bound`;
 
     const renderTabs = () => {
@@ -115,10 +138,13 @@ const StaticSchedule = (props) => {
         <Fragment>
             <StationHead
                 station={Stations[stationKey].name.replace('Station', '').trim()}>
-                {renderDirectionMenu(directions, setDirection, directionState)}
+                <MenuContainer>
+                    {renderMenu(directions, setDirection, directionState)}
+                    {renderMenu(['weekday', 'weekend'], setSchedule, schedule)}
+                </MenuContainer>
             </StationHead>
 
-            <Fetcher action={api.fetchScheduleByStationAndDay(Stations[stationKey].name, getDay(new Date()))}>
+            <Fetcher action={api.fetchScheduleByStationAndDay(Stations[stationKey].name, schedule)}>
 
                 {data => {
                     if(lineState === 'All') {
