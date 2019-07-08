@@ -6,8 +6,11 @@ import { FaFilter, FaChevronLeft } from 'react-icons/fa';
 import { brand_blue, brand_orange, brand_red } from "../../utils/colors";
 import { usePrevious } from '../../hooks';
 
+
 const HeaderContainer = styled.div`
-  position: fixed;
+  position: ${({fixed}) => fixed ? 'fixed' : 'absolute'};
+  top: 0;
+  left: 0;
   width: 100%;
   height: 70px;
   display: flex;
@@ -52,12 +55,13 @@ const FilterButton = styled(Button)`
 
 const Header = (props) => {
     const {
-        location
+        location,
+        fixed
     } = props;
     const previousLocation = usePrevious(location);
     const showBackButton = location.pathname !== '/';
     return (
-      <HeaderContainer>
+      <HeaderContainer fixed={fixed}>
           {showBackButton && <BackButton onClick={(e) => window.location.assign(previousLocation.pathname)}>
               <IconContext.Provider value={{ color: brand_orange}}>
                 <FaChevronLeft />

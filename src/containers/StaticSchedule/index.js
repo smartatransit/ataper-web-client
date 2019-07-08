@@ -6,7 +6,6 @@ import Fetcher from "../../components/Fetcher";
 import api from '../../api';
 import Stations from "../../constants/stations";
 import StationHead from '../../components/StationHead';
-import {getDay, sortByTime} from "../../utils/utils";
 import {brand_lighter_grey, brand_gold, brand_green, brand_red, brand_blue} from "../../utils/colors";
 import Tabs from '../../components/Tabs';
 
@@ -31,7 +30,7 @@ const ListItem = styled.div`
         width: 24px;
         border-radius: 50%;
         background-color: ${({line}) => {
-        switch(line) {
+            switch(line) {
                 case 'blue':
                     return brand_blue;
                 case 'red':
@@ -44,19 +43,6 @@ const ListItem = styled.div`
                     return 'transparent';
             }
         }};
-    }
-`;
-
-const MenuContainer = styled.div`
-    display: flex;
-    justify-content: center;
-    
-    > button {
-        margin-right: 20px;
-        
-        &:last-of-type {
-            margin-right: 0;
-        }
     }
 `;
 
@@ -134,14 +120,16 @@ const StaticSchedule = (props) => {
         )
     };
 
+    useEffect(() => {
+
+    })
+
     return (
         <Fragment>
             <StationHead
                 station={Stations[stationKey].name.replace('Station', '').trim()}>
-                <MenuContainer>
-                    {renderMenu(directions, setDirection, directionState)}
-                    {renderMenu(['weekday', 'weekend'], setSchedule, schedule)}
-                </MenuContainer>
+                {renderMenu(directions, setDirection, directionState)}
+                {renderMenu(['weekday', 'weekend'], setSchedule, schedule)}
             </StationHead>
 
             <Fetcher action={api.fetchScheduleByStationAndDay(Stations[stationKey].name, schedule)}>
