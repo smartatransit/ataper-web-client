@@ -2,17 +2,16 @@ import React, { useState, Fragment } from 'react';
 import { Route } from "react-router-dom";
 
 import Stations from '../../constants/stations';
-import ArrivalList from "../../containers/ArrivalsList";
 import DirectionSelector from '../../components/DirectionSelector'
 
 
 
-const Station = (props) => {
+const Direction = (props) => {
     const {
         match
     } = props;
     let {station} = match.params;
-    const stationKey = station.replace(/Station/gi, '').trim().replace('-', '');
+    const stationKey = station.replace('-', '');
     const directions = Stations[stationKey].directions;
 
     return (
@@ -24,5 +23,5 @@ const Station = (props) => {
 
 
 
-export default Station;
+export default Direction;
 

@@ -6,14 +6,14 @@ import useScrollDebouncer from '../../hooks/useScrollDebouncer';
 
 const Container = styled.div`
     position: relative;
-    height: 150px;
+    height: 100px;
     width: 100%;
 `;
 
 const Head = styled.div`
     position:${({fixed}) => fixed ? 'fixed' : 'absolute'};
     width: 100%;
-    height: auto;
+    height: 100px;
     top: 0;
     left: 0;
     display: flex;
@@ -51,18 +51,6 @@ const MenuContainer = styled.div`
             margin-right: 0;
         }
     }
-    
-    ${(collapsed) =>  collapsed && css`
-        &:after {
-            content: '';
-            height: 2px;
-            width: 24px;
-            background-color: ${brand_darkest_grey};
-            position: absolute;
-            bottom: 10px;
-            left: calc(50% - 12px);
-        }
-    `}
 `;
 
 

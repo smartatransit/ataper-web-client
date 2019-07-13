@@ -4,8 +4,9 @@ import styled from 'styled-components';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Header from './components/Header';
 import StationList from "./containers/StationList";
-import Station from './containers/Station';
+import DirectionDoor from './containers/DirectionDoor';
 import StaticSchedule from './containers/StaticSchedule';
+import ArrivalList from "./containers/ArrivalsList";
 
 const ContentWell = styled.div`
   padding: 71px 0 0;
@@ -30,21 +31,18 @@ function App() {
                       />
                       <Route
                           path="/static/:station"
-                          render={(props) => {
-                              setFixedHeader(false);
-                              return <StaticSchedule {...props}/>
-                          }}
+                          component={DirectionDoor}
                       />
                       <Route
                           path="/:station/:direction"
                           render={(props) => {
                               setFixedHeader(false);
-                              return <StaticSchedule {...props}/>
+                              return <ArrivalList {...props}/>
                           }}
                       />
                       <Route
                           path="/:station"
-                          component={Station} />
+                          component={DirectionDoor} />
                       <Route
                           path="/"
                           component={StationList} />

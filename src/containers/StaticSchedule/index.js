@@ -68,9 +68,11 @@ const renderMenu = (items, action, initialValue) => {
 };
 const renderAllLines = (data, direction) => {
     let allLines = [];
+
     for(let line in data) {
-        if(data.hasOwnProperty(line) && line !== 'station-name')
-        allLines = flatten(zip(data[line][direction].map((item) => ({line:line, time:item})), allLines)).filter(element => element);
+        if(data.hasOwnProperty(line) && line !== 'station-name' && !! data[line][direction]) {
+            allLines = flatten(zip(data[line][direction].map((item) => ({line:line, time:item})), allLines)).filter(element => element);
+        }
     }
 
     return (
