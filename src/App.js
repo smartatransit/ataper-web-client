@@ -7,6 +7,7 @@ import StationList from "./containers/StationList";
 import DirectionDoor from './containers/DirectionDoor';
 import StaticSchedule from './containers/StaticSchedule';
 import ArrivalList from "./containers/ArrivalsList";
+import GrommetTheme from './components/GrommetTheme';
 
 const ContentWell = styled.div`
   padding: 71px 0 0;
@@ -17,7 +18,7 @@ function App() {
     const [fixedHeader, setFixedHeader] = useState(true);
     return (
       <Router>
-          <div>
+          <GrommetTheme>
               <GlobalStyle/>
               <Header fixed={fixedHeader}/>
               <ContentWell>
@@ -45,11 +46,15 @@ function App() {
                           component={DirectionDoor} />
                       <Route
                           path="/"
-                          component={StationList} />
+                          render={(props) => {
+                              setFixedHeader(true);
+                              return <StationList {...props}/>
+                          }}
+                      />
 
                   </Switch>
               </ContentWell>
-        </div>
+        </GrommetTheme>
       </Router>
   );
 }

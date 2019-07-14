@@ -239,8 +239,8 @@ export default {
             ]
         }
     },
-    HEHolmes: {
-        name: "H.E. Holmes Station",
+    HamiltonEHolmes: {
+        name: "Hamilton E. Holmes Station",
         directions: {
             east: [
                 "blue"

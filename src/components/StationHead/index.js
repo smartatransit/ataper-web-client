@@ -1,7 +1,9 @@
-import React, {useState, useRef, useEffect} from 'react';
-import styled, {css} from "styled-components";
-import {brand_darkest_grey, brand_lighter_grey} from "../../utils/colors";
+import React, {useState, useRef} from 'react';
+import styled from "styled-components";
+import {MdFilterList} from "react-icons/md";
+import {brand_blue, brand_darkest_grey, brand_lighter_grey} from "../../utils/colors";
 import useScrollDebouncer from '../../hooks/useScrollDebouncer';
+import {IconContext} from "react-icons";
 
 const dimensions = {
     large: {
@@ -9,10 +11,10 @@ const dimensions = {
         expanded: '155px'
     },
     small: {
-        collapsed: '80px',
+        collapsed: '78px',
         expanded: '115px;'
     },
-    default: '110px'
+    default: 'auto'
 };
 
 const getHeight = (collapsed, size, isCollapsable) => {
@@ -32,34 +34,46 @@ const Container = styled.div`
     height: ${({collapsed, size, isCollapsable}) => (getHeight(collapsed, size, isCollapsable))}
     max-height: ${({collapsed, size, isCollapsable}) => (getHeight(collapsed, size, isCollapsable))}
     transition: max-height 0.25s ease;
-    overflow: hidden;
 `;
 
-const Head = styled.div`
+const Wrap = styled.div`
     position:${({fixed}) => fixed ? 'fixed' : 'relative'};
+    height: ${({collapsed, size, isCollapsable}) => (getHeight(collapsed, size, isCollapsable))}
     max-height: ${({collapsed, size, isCollapsable}) => (getHeight(collapsed, size, isCollapsable))}
     transition: max-height 0.25s ease;
-    overflow: hidden;
     width: 100%;
-    height: 100%;
     top: 0;
     left: 0;
+    z-index: 10;
+`
+
+const Head = styled.div`
+    overflow: hidden;
+    position: ${({isCollapsable}) => isCollapsable ? 'absolute' : 'relative'};
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: ${({isCollapsable}) => isCollapsable ? '100%' : null};
     padding: 16px;
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
     justify-content: space-between;
-    text-align: center;
-    font-size: 44px;
-    z-index: 10;
     border-bottom: 1px solid ${brand_lighter_grey};
     color: ${brand_darkest_grey};
     background-color: #FFF;
 `;
 
+const Name = styled.h1`
+    text-align: center;
+    font-size: calc(35px + 2vw);
+    line-height: calc(35px + 2vw);
+    font-weight: normal;
+`
+
 const Direction = styled.span`
     font-size: 2vh;
-    margin-top: 20px;
+    margin-top: 15px;
     color: ${brand_lighter_grey};
     font-weight: bold;
     text-transform: uppercase;
@@ -82,15 +96,46 @@ const MenuContainer = styled.div`
     }
 `;
 
+const MenuButton = styled.button`
+    position: absolute;
+    bottom: -40px;
+    right: 10px;
+    background: transparent;
+    width: 40px;
+    height: 40px;
+    border: none;
+    
+    &:focus {
+        outline: none;
+    }
+    
+    svg {
+        width: 100%;
+        height: 100%;
+    }
+`
+
+const renderMenuButton = (onClick) => (
+    <MenuButton onClick={onClick}>
+        <IconContext.Provider value={{ color: brand_blue}}>
+            <MdFilterList/>
+        </IconContext.Provider>
+    </MenuButton>
+);
+
 
 const StationHead = ({station, direction, isCollapsable, children}) => {
     const [fixed, setFixed] = useState(false);
-    const [collapsed, setCollapsed] = useState(! isCollapsable);
+    const [collapsed, setCollapsed] = useState(false);
     const header = useRef(null);
     const size = station.length > 16 ? 'large' : 'small';
 
     const setFixedHeader = (lastScroll, currentScroll) => {
         const scrollTrigger = header.current.offsetTop;
+
+        if(! isCollapsable) {
+            return;
+        }
 
         if(!fixed && lastScroll < currentScroll && currentScroll > scrollTrigger) {
             setFixed(true);
@@ -103,6 +148,8 @@ const StationHead = ({station, direction, isCollapsable, children}) => {
 
     useScrollDebouncer(this, setFixedHeader);
 
+
+
     const expand = (e) => {
         e.preventDefault();
         if(isCollapsable) {
@@ -112,13 +159,16 @@ const StationHead = ({station, direction, isCollapsable, children}) => {
 
     return (
         <Container ref={header} collapsed={collapsed} size={size} isCollapsable={isCollapsable}>
-            <Head fixed={fixed} collapsed={collapsed} size={size} onClick={expand} onDrag={expand} isCollapsable={isCollapsable}>
-                <span>{station}</span>
-                {direction && <Direction>{direction}</Direction>}
-                <MenuContainer collapsed={collapsed} onClick={(e) => {e.stopPropagation()}}>
-                    {children}
-                </MenuContainer>
-            </Head>
+            <Wrap onClick={expand} onDrag={expand} fixed={fixed} collapsed={collapsed} size={size} isCollapsable={isCollapsable}>
+                <Head isCollapsable={isCollapsable}>
+                    <Name>{station}</Name>
+                    {direction && <Direction>{direction}</Direction>}
+                    <MenuContainer collapsed={collapsed} onClick={(e) => {e.stopPropagation()}}>
+                        {children}
+                    </MenuContainer>
+                </Head>
+                {isCollapsable && renderMenuButton(expand)}
+            </Wrap>
         </Container>
     );
 

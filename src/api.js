@@ -91,7 +91,7 @@ const fetchArrivalsByStationAndDirection = (station, direction) => async () => {
     const lines = Stations[station].directions[direction];
     let responsePromises = [];
 
-
+    console.log(lines);
     for(const line of lines) {
         const response = fetch(`${BASE_URL}/api/live/schedule/line/${capitalizeFirstLetter(line)}`, {mode: 'cors'});
         responsePromises.push(response)
