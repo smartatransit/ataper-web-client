@@ -45,7 +45,7 @@ const ArrivalList = (props) => {
     } = props;
 
     const {direction, station} = match.params;
-    const stationKey = station.replace('-','');
+    const stationKey = station.replace(/-/gm, '');
     const [time, setTime] = useState(0);
     const [infoSelected, setInfoSelected] = useState(false);
 

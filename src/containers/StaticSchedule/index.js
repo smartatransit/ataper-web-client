@@ -104,7 +104,7 @@ const StaticSchedule = (props) => {
     } = props;
 
     const {station, direction} = match.params;
-    const stationKey = station.replace('-','');
+    const stationKey = station.replace(/-/gm, '');
     const directions = Stations[stationKey].directions;
     const [directionState, setDirection] = useState(direction || Object.keys(directions)[0]);
     const [lineState, setLine] = useState(line || 'All');
@@ -113,6 +113,9 @@ const StaticSchedule = (props) => {
 
     const renderTabs = () => {
         const data = Stations[stationKey].directions[directionState];
+        if(Object.keys(data).length < 2) {
+            return;
+        }
         const lines = data.map((line) => ({name: line, onClick: setLine}));
         return (
             <Tabs
@@ -129,7 +132,8 @@ const StaticSchedule = (props) => {
     return (
         <Fragment>
             <StationHead
-                station={Stations[stationKey].name.replace('Station', '').trim()}>
+                station={Stations[stationKey].name.replace('Station', '').trim()}
+                isCollapsable >
                 {renderMenu(directions, setDirection, directionState)}
                 {renderMenu(['weekday', 'weekend'], setSchedule, schedule)}
             </StationHead>

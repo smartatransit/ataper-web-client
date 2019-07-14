@@ -179,8 +179,8 @@ export default {
             ]
         }
     },
-    Edgewood: {
-        name: "Edgewood Station",
+    EdgewoodCandlerPark: {
+        name: "Edgewood-Candler Park Station",
         directions: {
             east: [
                 "blue",

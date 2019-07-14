@@ -11,7 +11,8 @@ const Direction = (props) => {
         match
     } = props;
     let {station} = match.params;
-    const stationKey = station.replace('-', '');
+    const stationKey = station.replace(/-/gm, '');
+    console.log(stationKey)
     const directions = Stations[stationKey].directions;
 
     return (
