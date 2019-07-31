@@ -6,7 +6,7 @@ import { BASE_URL } from './env';
 
 const fetchScheduleByStationAndDay = (station, day) => async () => {
     
-    const response = await fetch(`${BASE_URL}/api/static/schedule/station?schedule=${day}&station-name=${station}`, {mode: 'same-origin'});
+    const response = await fetch(`https://staging.api.ataper.com/api/static/schedule/station?schedule=${day}&station-name=${station}`, {mode: 'same-origin'});
     const jsonData = response.json();
     if (!response.ok) {
         throw new Error(jsonData, response.statusCode);
@@ -17,7 +17,7 @@ const fetchScheduleByStationAndDay = (station, day) => async () => {
 
 const fetchArrivalsByLineAndStation = (line, station) => async () => {
     console.log(line, station, 'second')
-    const response = await fetch(`${BASE_URL}/api/live/schedule/line?line=${line}`, {mode: 'same-origin'});
+    const response = await fetch(`https://staging.api.ataper.com/api/live/schedule/line?line=${line}`, {mode: 'same-origin'});
     let jsonData = response.json();
     const ArrivalPromise = new Promise((resolve, reject) => {
         if (!response.ok) {
@@ -35,7 +35,7 @@ const fetchArrivalsByLineAndStation = (line, station) => async () => {
 }
 
 const fetchlines = async () => {
-    const response = await fetch(`${BASE_URL}/api/static/lines`, {mode: 'same-origin'});
+    const response = await fetch(`https://staging.api.ataper.com/api/static/lines`, {mode: 'same-origin'});
     const jsonData = response.json();
 
     if (!response.ok) {
@@ -47,7 +47,7 @@ const fetchlines = async () => {
 
 const fetchDirections = async () => {
     
-    const response = await fetch(`${BASE_URL}/api/static/directions`, {mode: 'same-origin'});
+    const response = await fetch(`https://staging.api.ataper.com/api/static/directions`, {mode: 'same-origin'});
     const jsonData = response.json();
 
     if (!response.ok) {
@@ -58,7 +58,7 @@ const fetchDirections = async () => {
 
 const fetchStationsByLineAndDirection = (line, direction) => async () => {
     const schedule = getScheduleType(new Date());
-    const response = await fetch(`${BASE_URL}/api/static/stations?line=${line}&direction=${direction}&schedule=${schedule}`, {mode: 'same-origin'});
+    const response = await fetch(`https://staging.api.ataper.com/api/static/stations?line=${line}&direction=${direction}&schedule=${schedule}`, {mode: 'same-origin'});
     const jsonData = response.json();
 
     if (!response.ok) {
@@ -78,7 +78,7 @@ const fetchStationsByLocation = () => async () => {
         }
     });
     const position = await location;
-    const response = await fetch(`${BASE_URL}/api/static/stations/location?latitude=${position.latitude}&longitude=${position.longitude}`, {mode: 'same-origin'});
+    const response = await fetch(`https://staging.api.ataper.com/api/static/stations/location?latitude=${position.latitude}&longitude=${position.longitude}`, {mode: 'same-origin'});
     const jsonData = response.json();
 
     if (!response.ok) {
@@ -93,7 +93,7 @@ const fetchArrivalsByStationAndDirection = (station, direction) => async () => {
 
     console.log(lines);
     for(const line of lines) {
-        const response = fetch(`${BASE_URL}/api/live/schedule/line/${capitalizeFirstLetter(line)}`, {mode: 'same-origin'});
+        const response = fetch(`https://staging.api.ataper.com/api/live/schedule/line/${capitalizeFirstLetter(line)}`, {mode: 'same-origin'});
         responsePromises.push(response)
     }
 
