@@ -179,8 +179,8 @@ export default {
             ]
         }
     },
-    Edgewood: {
-        name: "Edgewood Station",
+    EdgewoodCandlerPark: {
+        name: "Edgewood-Candler Park Station",
         directions: {
             east: [
                 "blue",
@@ -239,8 +239,8 @@ export default {
             ]
         }
     },
-    HEHolmes: {
-        name: "H.E. Holmes Station",
+    HamiltonEHolmes: {
+        name: "Hamilton E. Holmes Station",
         directions: {
             east: [
                 "blue"

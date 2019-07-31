@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import styled from "styled-components";
 import {brand_red} from "../../utils/colors";
 
@@ -28,6 +28,12 @@ const DirectionSelector = (props) => {
         directions,
         url
     } = props;
+    const directionKeys = Object.keys(directions);
+    if (directionKeys.length === 1) {
+        return (
+            <Redirect to={`${url}/${directionKeys[0]}`} />
+        )
+    }
     return (
             <DirectionContainer>
                 {Object.keys(directions).map((direction, index) => (

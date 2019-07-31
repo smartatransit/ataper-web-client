@@ -1,44 +1,56 @@
-import React from 'react';
+import React, {useState} from 'react';
 import GlobalStyle from './global-styles';
 import styled from 'styled-components';
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Header from './components/Header';
 import StationList from "./containers/StationList";
-import Station from './containers/Station';
-import ArrivalsList from "./containers/ArrivalsList";
+import DirectionDoor from './containers/DirectionDoor';
 import StaticSchedule from './containers/StaticSchedule';
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import ArrivalList from "./containers/ArrivalsList";
+import GrommetTheme from './components/GrommetTheme';
 
 const ContentWell = styled.div`
   padding: 71px 0 0;
 `;
 
 function App() {
-  return (
+
+    const [fixedHeader, setFixedHeader] = useState(true);
+    return (
       <Router>
-          <div className="">
+          <GrommetTheme>
               <GlobalStyle/>
-              <Header />
+              <Header fixed={fixedHeader}/>
               <ContentWell>
                   <Switch>
                       <Route
                           path="/static/:station/:direction"
-                          component={StaticSchedule} />
+                          render={(props) => {
+                              setFixedHeader(false);
+                              return <StaticSchedule {...props}/>
+                          }}
+                      />
                       <Route
                           path="/static/:station"
-                          component={StaticSchedule} />
+                          component={DirectionDoor}
+                      />
                       <Route
                           path="/:station/:direction"
-                          component={ArrivalsList} />
+                          component={ArrivalList} />
                       <Route
                           path="/:station"
-                          component={Station} />
+                          component={DirectionDoor} />
                       <Route
                           path="/"
-                          component={StationList} />
+                          render={(props) => {
+                              setFixedHeader(true);
+                              return <StationList {...props}/>
+                          }}
+                      />
 
                   </Switch>
               </ContentWell>
-        </div>
+        </GrommetTheme>
       </Router>
   );
 }

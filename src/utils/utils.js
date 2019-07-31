@@ -36,3 +36,43 @@ export function getDay(date) {
     }
     return 'weekday';
 }
+
+export function sortByTime(data) {
+    return data.sort(function(a,b){
+        return new Date('1970/01/01 ' + a.time) - new Date('1970/01/01 ' + b.time);
+    });
+}
+
+export function scrollDebounce(context, callback) {
+    var latestKnownScrollY = 0,
+        lastScroll = 0,
+        ticking = false;
+
+    function onScroll() {
+        latestKnownScrollY = window.scrollY;
+        requestTick();
+    }
+
+    function requestTick() {
+        if(!ticking) {
+            requestAnimationFrame(update);
+        }
+        ticking = true;
+    }
+
+    function update() {
+        // reset the tick so we can
+        // capture the next onScroll
+        ticking = false;
+
+
+        var currentScrollY = latestKnownScrollY;
+
+        callback.apply(context, [lastScroll, currentScrollY]);
+
+        lastScroll = currentScrollY;
+    }
+
+
+    window.addEventListener('scroll', onScroll);
+}

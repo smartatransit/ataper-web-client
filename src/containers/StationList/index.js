@@ -53,7 +53,7 @@ const StationList = (props) => {
             <List>
                 {data.stations.map((station) => {
                     const name = station["station-name"];
-                    const key = name.replace(/Station/gi, '').trim().replace(' ', "-");
+                    const key = name.replace(/Station/gm, '').trim().replace(/ /gm, "-").replace(/\./gm, '');
                     const distance = station.distance.toFixed(2);
                     return (
                         <Link key={key} to={`/${key}`}>
