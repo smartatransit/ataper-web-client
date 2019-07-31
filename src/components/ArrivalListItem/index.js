@@ -67,10 +67,9 @@ const ArrivalHead = styled.div`
     flex: 1 1;
 `;
 
-const ArrivalTime = styled.h2`
+const ArrivalTime = styled.span`
     font-size: 18px;
     width: 100%;
-    margin-bottom: 7px;
     color: ${({color}) => (color)};
     
 `;

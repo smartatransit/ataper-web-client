@@ -2,7 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import {withRouter} from 'react-router-dom';
 import { IconContext } from 'react-icons';
-import { FaFilter, FaChevronLeft } from 'react-icons/fa';
+import { FaExclamation, FaChevronLeft } from 'react-icons/fa';
+import {GoReport} from "react-icons/go";
 import { brand_blue, brand_orange, brand_red } from "../../utils/colors";
 import { usePrevious } from '../../hooks';
 
@@ -28,9 +29,9 @@ const Button = styled.div`
   align-items: center;
   justify-content: center;
   cursor: pointer;
-   top: calc(50% - 20px);
-   width: 40px;
-   height: 40px;
+  top: calc(50% - 20px);
+  width: 40px;
+  height: 40px;
 `;
 
 const BackButton = styled(Button)`
@@ -50,7 +51,12 @@ const Image = styled.img`
 
 const FilterButton = styled(Button)`
   right: 20px;
-  display: none;
+  display: flex;
+  
+  svg {
+    width: 30px;
+    height: 30px;
+  }
 `;
 
 const Header = (props) => {
@@ -71,8 +77,8 @@ const Header = (props) => {
               <Image src="/img/smarta-logo.png" fit="contain"/>
           </Logo>
           <FilterButton>
-              <IconContext.Provider value={{ color: brand_red}}>
-                <FaFilter />
+              <IconContext.Provider value={{ color: '#fff'}}>
+                <FaExclamation />
               </IconContext.Provider>
           </FilterButton>
       </HeaderContainer>

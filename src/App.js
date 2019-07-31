@@ -36,11 +36,7 @@ function App() {
                       />
                       <Route
                           path="/:station/:direction"
-                          render={(props) => {
-                              setFixedHeader(false);
-                              return <ArrivalList {...props}/>
-                          }}
-                      />
+                          component={ArrivalList} />
                       <Route
                           path="/:station"
                           component={DirectionDoor} />
