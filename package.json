@@ -14,7 +14,7 @@
     "react-icons": "^3.7.0",
     "react-redux": "^7.0.3",
     "react-router-dom": "^5.0.0",
-    "react-scripts": "3.0.0",
+    "react-scripts": "5.0.1",
     "styled-components": "^4.2.0"
   },
   "scripts": {
@@ -49,8 +49,8 @@
     "@storybook/addon-actions": "^5.0.11",
     "@storybook/addon-links": "^5.0.11",
     "@storybook/addons": "^5.0.11",
-    "@storybook/react": "^5.0.11",
+    "@storybook/react": "^9.1.1",
     "babel-loader": "^8.0.5",
-    "cypress": "^3.3.1"
+    "cypress": "^14.5.3"
   }
 }
